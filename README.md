@@ -15,7 +15,7 @@ Simply clone the repository and run `python main.py`.
 
 
 **Note:**  
-Per aiohttp, this project requires Python3.4.2+ to function.
+Per aiohttp, this project requires Python3.4.2+ to function. Feel free to use 3.6, thought---it's vastly superior.
 
 ---------------
 
