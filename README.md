@@ -1,6 +1,6 @@
 ## Gyaku
 
-Gyaku is a small project which uses [Kyoukai](https://github.com/SunDwarf/Kyoukai) (a flask-like asynchronous web framework) and [aiohttp](https://github.com/aio-libs/aiohttp) to scrape Google's reverse image search and return JSON.
+Gyaku is a small project which uses [Kyoukai](https://github.com/SunDwarf/Kyoukai) (a flask-like asynchronous web framework) and [aiohttp](https://github.com/aio-libs/aiohttp) to scrape Google's reverse image search and return a JSON response.
 
 ---------------
 ### Attribution
