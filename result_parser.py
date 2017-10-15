@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 
 def parse_results(code):
-    """Parse/Scrape the HTML code for the info we want."""
+    """ Scrape the google reverse image search page for the important bits """
 
     soup = BeautifulSoup(code, 'lxml')
 
