@@ -23,7 +23,7 @@ async def get_search_html(url):
         else:
             return None
 
-@app.route("/search", methods=['POST'])
+@app.route('/search', methods=['POST'])
 async def get_handler(ctx):
     """ Returns json respresentiaton of a google reverse image search query """
     img_url = ''
@@ -36,5 +36,5 @@ async def get_handler(ctx):
     return as_json(resp_json)
 
 
-if __name__ == "__main__":
-    app.run(ip="localhost", port=8000)
+if __name__ == '__main__':
+    app.run(ip='localhost', port=8000)
