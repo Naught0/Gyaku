@@ -1,0 +1,3 @@
+aiohttp >= 2.0
+kyoukai >= 2.2.1
+bs4 >= 4.4
