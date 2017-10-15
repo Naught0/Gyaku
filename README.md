@@ -2,23 +2,15 @@
 
 Gyaku is a small project which uses [Kyoukai](https://github.com/SunDwarf/Kyoukai) (a flask-like asynchronous web framework) and [aiohttp](https://github.com/aio-libs/aiohttp) to scrape Google's reverse image search and return a JSON response.
 
----------------
 ### Attribution
-
-This project was inspired by [Mrisa](https://github.com/vivithemage/mrisa), which uses Pycurl and Flask to achieve the same task. The code to scrape the Google results was derived directly from this project.
-
----------------
+This project was inspired by [MRISA](https://github.com/vivithemage/mrisa), which uses Pycurl and Flask to achieve the same task. The code to scrape the Google results was derived directly from this project.
 
 ### Setup
-
 Simply clone the repository and run `python main.py`.  
 
 
 **Note:**  
 Per aiohttp, this project requires Python3.4.2+ to function. Feel free to use 3.6, though---it's vastly superior.
-
----------------
-
 ### Usage
 Make a POST request to `localhost:8000/search` with an image URL.  
 e.g.  
@@ -59,7 +51,6 @@ This will return:
   "best_guess":"super mario run mario"
 }
 ```
-
 ### Bugs & Questions
 
 If you have any questions or problems, feel free to message me via discord naught0#4417 or submit an issue.
