@@ -4,6 +4,7 @@ import asyncio
 import aiohttp
 import result_parser as rp
 from kyoukai import Kyoukai
+from kyoukai.util import as_json
 
     
 LOOP = asyncio.get_event_loop()
@@ -32,7 +33,7 @@ async def get_handler(ctx):
     resp_html = await get_search_html(SEARCH_URI.format(url))
     resp_json = rp.parse_results(resp_html)
 
-    return resp_json
+    return as_json(resp_json)
 
 
 if __name__ == "__main__":
