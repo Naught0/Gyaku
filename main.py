@@ -30,8 +30,11 @@ async def get_handler(ctx):
     for url in ctx.request.form:
         img_url = url
 
-    resp_html = await get_search_html(SEARCH_URI.format(url))
-    resp_json = rp.parse_results(resp_html)
+    resp_html = await get_search_html(SEARCH_URI.format(img_url))
+    if resp_html:
+        resp_json = rp.parse_results(resp_html)
+    else:
+        return None
 
     return as_json(resp_json)
 
