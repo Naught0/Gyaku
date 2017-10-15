@@ -13,7 +13,7 @@ SEARCH_URI = 'https://www.google.com/searchbyimage?&image_url={}'
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11'}
 
 
-app = Kyoukai('image_search')
+app = Kyoukai('image_search', loop=LOOP)
 
 async def get_search_html(url):
     """ Gets the html response of a google images search page """ 
