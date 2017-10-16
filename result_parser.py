@@ -18,7 +18,8 @@ def parse_results(code):
         'descriptions': [],
         'titles': [],
         'similar_images': [],
-        'best_guess': ''
+        'best_guess': '',
+        'error': None
     }
 
     for div in soup.findAll('div', attrs={'class': 'rc'}):
