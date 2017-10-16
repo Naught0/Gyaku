@@ -24,7 +24,7 @@ async def get_resp_html(url):
     """ Gets the HTML response of a given URL """
     async with SESSION.get(url, headers=HEADERS) as r:
         if r.status == 200:
-            return await r.text
+            return await r.text()
         else:
             return None
 
