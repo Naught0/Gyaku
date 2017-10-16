@@ -41,19 +41,20 @@ async def search_handler(ctx):
     if not is_image(image_resp):
         return as_json({'error': 'URL does not contain a proper image'})
 
-    # Search for the image via reverse google image search       
+    # Search for the image via reverse google image search 
     google_resp = await get_resp_obj(SEARCH_URI.format(img_url))
-    if google_resp is None:
-        return as_json({'error': 'Google has blocked this IP\nRe-captcha may be required'})
-    else:
-        google_html = await google_resp.text() 
-        try:
-            # Decode the HTML into a json response
-            return as_json(rp.parse_results(google_html))
-        except Exception as e:
-            return as_json({'error': f'Soup parsing error: {e}'})
+    print(google_resp)
+    # if google_resp is None:
+    #     return as_json({'error': 'Google has blocked this IP\nRe-captcha may be required'})
+    # else:
+    #     google_html = await google_resp.text() 
+    #     try:
+    #         # Decode the HTML into a json response
+    #         return as_json(rp.parse_results(google_html))
+    #     except Exception as e:
+    #         return as_json({'error': f'Soup parsing error: {e}'})
 
-    return as_json(resp_json)
+    # return as_json(resp_json)
 
 
 if __name__ == '__main__':
