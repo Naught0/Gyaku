@@ -45,9 +45,9 @@ async def search_handler(ctx):
     else: 
         try:
             # Decode the HTML into a json response
-            resp_json = rp.parse_results(
-                            await get_resp_obj(SEARCH_URI.format(img_url)).text()
-                            )
+            google_resp = await get_resp_obj(SEARCH_URI.format(img_url))
+            google_html = await google_resp.text() 
+            return as_json(rp.parse_results(google_html))
         except Exception as e:
             return as_json({'error': f'Soup parsing error: {e}'})
 
