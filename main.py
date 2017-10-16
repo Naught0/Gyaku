@@ -23,7 +23,7 @@ async def get_resp_obj(url):
         else:
             return None
 
-async def is_image(r: aiohttp.ClientResponse):
+def is_image(r: aiohttp.ClientResponse):
     """ Checks whether the supplied URL is a proper image """ 
     return r.content_type.startswith('image')
 
