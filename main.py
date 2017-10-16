@@ -18,10 +18,7 @@ app = Kyoukai('image_search', loop=LOOP)
 async def get_resp_obj(url):
     """ Gets the html response of a google images search page """ 
     async with SESSION.get(url, headers=HEADERS) as r:
-        if r.status == 200:
-            return r
-        else:
-            return None
+        return r
 
 def is_image(r: aiohttp.ClientResponse):
     """ Checks whether the supplied URL is a proper image """ 
@@ -42,7 +39,7 @@ async def search_handler(ctx):
         return as_json({'error': 'URL does not contain a proper image'})
 
     # Search for the image via reverse google image search 
-    google_resp = await get_resp_obj(SEARCH_URI.format(img_url))
+    google_resp = await get_resp_obj(SEARCH_URI.format(img_url)).text()
     print(google_resp)
     # if google_resp is None:
     #     return as_json({'error': 'Google has blocked this IP\nRe-captcha may be required'})
