@@ -15,26 +15,41 @@ HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11
 
 app = Kyoukai('image_search', loop=LOOP)
 
-async def get_search_html(url):
+async def get_resp_obj(url):
     """ Gets the html response of a google images search page """ 
     async with SESSION.get(url, headers=HEADERS) as r:
         if r.status == 200:
-            return await r.text()
+            return r
         else:
             return None
 
+async def is_image(r: aiohttp.ClientResponse):
+    """ Checks whether the supplied URL is a proper image """ 
+    return r.content_type.startswith('image')
+
 @app.route('/search', methods=['POST'])
-async def get_handler(ctx):
+async def search_handler(ctx):
     """ Returns json respresentiaton of a google reverse image search query """
     img_url = ''
     for url in ctx.request.form:
         img_url = url
 
-    resp_html = await get_search_html(SEARCH_URI.format(img_url))
-    if resp_html:
-        resp_json = rp.parse_results(resp_html)
-    else:
-        return None
+    # Check whether the image exists and is actually a proper image
+    image_response = await get_resp_obj(img_url)
+    if image_response.status != 200:
+        return as_json({'error': 'URL is unreachable'})
+    elif not is_image(image_response):
+        return as_json({'error': 'URL does not contain a proper image'})
+
+    # Search for the image via reverse google image search
+    else: 
+        try:
+            # Decode the HTML into a json response
+            resp_json = rp.parse_results(
+                            await get_resp_obj(SEARCH_URI.format(img_url).text())
+                            )
+        except Exception as e:
+            return as_json({'error': f'Soup parsing error: {e}'})
 
     return as_json(resp_json)
 
