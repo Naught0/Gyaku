@@ -16,9 +16,17 @@ HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11
 app = Kyoukai('image_search', loop=LOOP)
 
 async def get_resp_obj(url):
-    """ Gets the html response of a google images search page """ 
+    """ Gets the aiohttp response object for a given URL """ 
     async with SESSION.get(url, headers=HEADERS) as r:
         return r
+
+async def get_resp_html(url):
+    """ Gets the HTML response of a given URL """
+    async with SESSION.get(url, headers=HEADERS) as r:
+        if r.status == 200:
+            return await r.text
+        else:
+            return None
 
 def is_image(r: aiohttp.ClientResponse):
     """ Checks whether the supplied URL is a proper image """ 
@@ -38,20 +46,19 @@ async def search_handler(ctx):
     if not is_image(image_resp):
         return as_json({'error': 'URL does not contain a proper image'})
 
-    # Search for the image via reverse google image search 
-    google_resp = await get_resp_obj(SEARCH_URI.format(img_url)).text()
-    print(google_resp)
-    # if google_resp is None:
-    #     return as_json({'error': 'Google has blocked this IP\nRe-captcha may be required'})
-    # else:
-    #     google_html = await google_resp.text() 
-    #     try:
-    #         # Decode the HTML into a json response
-    #         return as_json(rp.parse_results(google_html))
-    #     except Exception as e:
-    #         return as_json({'error': f'Soup parsing error: {e}'})
+    # Search for the image via reverse google image search
+    google_html = await get_resp_html(SEARCH_URI.format(img_url))
+    if google_html is None:
+        return as_json({'error': 'Google has blocked this IP\nRe-captcha may be required'})
 
-    # return as_json(resp_json)
+    # Try to decode HTML into JSON response
+    try:
+        # Decode the HTML into a json response
+        return as_json(rp.parse_results(google_html))
+    except Exception as e:
+        return as_json({'error': f'Soup parsing error: {e}'})
+
+    return as_json(resp_json)
 
 
 if __name__ == '__main__':
