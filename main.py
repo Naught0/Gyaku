@@ -35,20 +35,22 @@ async def search_handler(ctx):
         img_url = url
 
     # Check whether the image exists and is actually a proper image
-    image_response = await get_resp_obj(img_url)
-    if image_response.status != 200:
+    image_resp = await get_resp_obj(img_url)
+    if image_resp.status != 200:
         return as_json({'error': 'URL is unreachable'})
-    elif not is_image(image_response):
+    if not is_image(image_resp):
         return as_json({'error': 'URL does not contain a proper image'})
 
-    # Search for the image via reverse google image search
-    else: 
+    # Search for the image via reverse google image search       
+    google_resp = await get_resp_obj(SEARCH_URI.format(img_url))
+    if google_resp.status != 200:
+        return as_json({'error': 'Google has blocked you'})
+    else:
+        google_html = await google_resp.text() 
         try:
             # Decode the HTML into a json response
-            google_resp = await get_resp_obj(SEARCH_URI.format(img_url))
-            google_html = await google_resp.text() 
             return as_json(rp.parse_results(google_html))
-        except Exception as e:
+        except:
             return as_json({'error': f'Soup parsing error: {e}'})
 
     return as_json(resp_json)
