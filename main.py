@@ -53,7 +53,6 @@ async def search_handler(ctx):
 
     # Try to decode HTML into JSON response
     try:
-        # Decode the HTML into a json response
         return as_json(rp.parse_results(google_html))
     except Exception as e:
         return as_json({'error': f'Soup parsing error: {e}'})
